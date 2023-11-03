@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 FILE *f;
+FILE *temp;
 char *servers[50];
 char *hostnames[50];
 int serverAmount = -1;
@@ -12,6 +13,7 @@ char serverListPath[] = "C:\\serverSSH\\serverlist.txt";
 void loadServers();
 void separateServerHostname();
 void printHostList();
+void removeServer(int server);
 void addServer(char server[]);
 
 int main()
@@ -22,10 +24,12 @@ int main()
     loadServers();
     do
     {
+        system("cls");
         printf("[0]End\n");
         printf("[1]Connect to a server\n");
         printf("[2]Add a server\n");
         printf("[3]Remove a server\n");
+        printf("[4]List all servers\n");
         scanf("%d", &input);
         system("cls");
         switch (input)
@@ -33,7 +37,7 @@ int main()
         case 0:
             break;
         case 1:
-            printf("\nSelect server: ");
+            printf("Select server: \n");
             printHostList();
             scanf("%d", &input);
 
@@ -53,6 +57,15 @@ int main()
             addServer(read);
             break;
         case 3:
+            printf("Select server to delete:\n");
+            printHostList();
+            scanf("%d", &i);
+            removeServer(i);
+            i = 0;
+            break;
+        case 4:
+            printHostList();
+            system("pause");
             break;
         }
     } while (input != 0);
@@ -91,14 +104,29 @@ void printHostList()
 {
     for (int i = 0; i <= serverAmount; i++)
     {
-        printf("\n[%d] %s", i, hostnames[i]);
+        printf("[%d] %s\n", i, hostnames[i]);
     }
 }
 
 void loadServers()
 {
-    // Read all servers from serverlist
-    // Save them into servers array
+    if (serverAmount > -1)
+    {
+        for (int i = -1; i >= 0; i--)
+        {
+            servers[i] = NULL;
+            hostnames[i] = NULL;
+            serverAmount -= 1;
+        }
+
+        for (int i = 0; i <= serverAmount; i++)
+        {
+            free(servers[i]);
+            free(hostnames[i]);
+        }
+        serverAmount = -1;
+    }
+
     char read[40];
     int i = 0;
     f = fopen(serverListPath, "r");
@@ -121,4 +149,19 @@ void addServer(char server[])
     fprintf(f, "\n");
     fprintf(f, server);
     fclose(f);
+    loadServers();
+}
+
+void removeServer(int server)
+{
+    char ultarCoolCommand[255] = "copy temp.txt ";
+    temp = fopen("temp.txt", "w");
+    for (int i = 0; i <= serverAmount; i++)
+    {
+        if (i != server)
+            fprintf(temp, "%s:%s", hostnames[i], servers[i]);
+    }
+    fclose(temp);
+    system(strcat(ultarCoolCommand, serverListPath));
+    loadServers();
 }
