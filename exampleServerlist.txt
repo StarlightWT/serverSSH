@@ -1,5 +1,0 @@
-NextCloud:root@192.168.0.103
-StarData:serveradmin@192.168.0.249
-StarBot:serveradmin@192.168.0.165
-StaryCraft:serveradmin@192.168.0.214
-Docker:eve@192.168.0.235
