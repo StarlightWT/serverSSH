@@ -51,7 +51,7 @@ int main()
             {
                 strcat(server, servers[input]);
                 system(server);
-                // system("cls");
+                system("cls");
             }
             else
                 printf("Error: Invalid input!\n");
@@ -64,11 +64,9 @@ int main()
             addServer(read);
             break;
         case 3:
-            printf("Select server to delete:\n[0] To go back\n");
+            printf("Select server to delete:");
             printHostList();
             scanf("%d", &i);
-            if (i = 0)
-                break;
             removeServer(i);
             i = 0;
             break;
@@ -155,7 +153,7 @@ void addServer(char server[])
 {
     char read[50];
     f = fopen(serverListPath, "a");
-    if (serverAmount >= 0)
+    if (serverAmount > -1)
         fprintf(f, "\n");
     fprintf(f, server);
     fclose(f);
