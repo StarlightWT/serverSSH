@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dirent.h>
 
 FILE *f;
 FILE *temp;
+DIR *data;
 char *servers[50];
 char *hostnames[50];
 int serverAmount = -1;
@@ -21,6 +23,9 @@ int main()
     int input, i = 0, helperInt = 0;
     char helperChar, read[50];
     char server[60] = "C:\\\"Program Files\"\\Git\\usr\\bin\\ssh.exe ";
+    data = opendir("C:\\serverSSH");
+    if (data == NULL)
+        system("mkdir C:\\serverSSH");
     loadServers();
     do
     {
@@ -150,7 +155,8 @@ void addServer(char server[])
 {
     char read[50];
     f = fopen(serverListPath, "a");
-    fprintf(f, "\n");
+    if (serverAmount >= 0)
+        fprintf(f, "\n");
     fprintf(f, server);
     fclose(f);
     loadServers();
@@ -167,5 +173,6 @@ void removeServer(int server)
     }
     fclose(temp);
     system(strcat(ultarCoolCommand, serverListPath));
+    system("del temp.txt");
     loadServers();
 }
