@@ -46,20 +46,24 @@ int main()
             {
                 strcat(server, servers[input]);
                 system(server);
-                system("cls");
+                // system("cls");
             }
             else
                 printf("Error: Invalid input!\n");
             break;
         case 2:
-            printf("Add a server:\nTitle:username@ip_adress\n");
+            printf("[0] To go back\nAdd a server:\nTitle:username@ip_adress\n");
             scanf(" %s", &read);
+            if (read[0] == '0')
+                break;
             addServer(read);
             break;
         case 3:
-            printf("Select server to delete:\n");
+            printf("Select server to delete:\n[0] To go back\n");
             printHostList();
             scanf("%d", &i);
+            if (i = 0)
+                break;
             removeServer(i);
             i = 0;
             break;
