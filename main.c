@@ -55,6 +55,7 @@ int main()
             }
             else
                 printf("Error: Invalid input!\n");
+            input = 0;
             break;
         case 2:
             printf("[0] To go back\nAdd a server:\nTitle:username@ip_adress\n");
