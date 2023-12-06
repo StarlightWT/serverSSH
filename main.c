@@ -51,23 +51,26 @@ int main()
             {
                 strcat(server, servers[input]);
                 system(server);
+                strcpy(server, "C:\\\"Program Files\"\\Git\\usr\\bin\\ssh.exe ");
                 system("cls");
             }
             else
                 printf("Error: Invalid input!\n");
-            input = 0;
+            input = -1;
             break;
         case 2:
-            printf("[0] To go back\nAdd a server:\nTitle:username@ip_adress\n");
+            printf("[0] to cancel\nAdd a server:\nTitle:username@ip_adress\n");
             scanf(" %s", &read);
             if (read[0] == '0')
                 break;
             addServer(read);
             break;
         case 3:
-            printf("Select server to delete:");
+            printf("Select server to delete:\n[-1] Cancel");
             printHostList();
             scanf("%d", &i);
+            if (i == -1)
+                break;
             removeServer(i);
             i = 0;
             break;
